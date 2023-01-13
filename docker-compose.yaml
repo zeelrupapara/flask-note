@@ -1,0 +1,21 @@
+version: '2.7'
+
+services:
+   db:
+    image: mariadb:10.2
+    environment:
+      MYSQL_ROOT_PASSWORD: note
+      MYSQL_DATABASE: note
+      MYSQL_USER: note
+      MYSQL_PASSWORD: note
+    logging:
+      driver: syslog
+    ports:
+      - 3306:3306
+    restart: on-failure
+    volumes:
+     - mariadb:/var/lib/mysql
+
+volumes:
+  mariadb:
+    driver: local
