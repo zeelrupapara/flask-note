@@ -12,7 +12,7 @@ Application for taking notes
 ```bash
 python -m venv flask_note_env
 ```
-##### Note: If you don't have venv than install it below way,
+`Note: If you don't have venv than install it below way`
 ```bash 
 python -m pip install venv
 ```
@@ -32,6 +32,7 @@ export FLASK_APP=main.py
 export FLASK_ENV=development
 ```
 #### Now, Run flask app,
+`Recommend: Before run application apply migration`
 ```bash
 flask run
 ```
