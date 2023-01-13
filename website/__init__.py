@@ -3,13 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_pyfile('config.py')
     db.init_app(app)
-    migrate = Migrate(app, db)
-
+    print(db.engine.connect())
+    migrate.init_app(app, db)
+    
     from .views import views
     from .auth import auth
     app.register_blueprint(views, url_prefix='/')
