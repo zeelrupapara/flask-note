@@ -16,14 +16,14 @@ def create_app():
     # db
     db.init_app(app)
 
-        # blueprints
+    # blueprints
     from .views import views
     from .auth import auth
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(views, url_prefix='/')
-
+    
     # migrations
-    from .models import User, Note
+    
     migrate.init_app(app, db)
 
     # for user seesion management
@@ -31,6 +31,7 @@ def create_app():
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
+    from .models import User
     # reload the user object from the user ID stored in the session
     @login_manager.user_loader
     def load_user(id):
