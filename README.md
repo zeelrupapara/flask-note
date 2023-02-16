@@ -9,7 +9,7 @@ Application for taking notes
 
 ## Local Setup
 #### First, create virtualenv if you want
-```bash
+e
 python -m venv flask_note_env
 ```
 `Note: If you don't have venv than install it below way`
@@ -21,7 +21,7 @@ python -m pip install venv
 ```bash
 . flask_note_env/bin/activate
 ```
-
+===================================================
 #### After activation, need to install dependecies,
 ```bash
 python -m pip install -r requirements.txt
@@ -31,11 +31,14 @@ python -m pip install -r requirements.txt
 export FLASK_APP=main.py
 export FLASK_ENV=development
 ```
+====================================================
 #### Now, Run flask app,
 `Recommend: Before run application apply migration`
 ```bash
 flask run
 ```
+
+====================================================`
 ### For, Apply Migration:
 1. Create a migration repository
 
@@ -54,3 +57,4 @@ flask db migrate -m "init migration"
 ```python
 flask db upgrade
 ```
+========================================================
