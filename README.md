@@ -8,11 +8,12 @@ Application for taking notes
 
 
 ## Local Setup
+
 #### First, create virtualenv if you want
-e
+```bash
 python -m venv flask_note_env
 ```
-`Note: If you don't have venv than install it below way`
+###### Note: If you don't have venv than install it below way
 ```bash 
 python -m pip install venv
 ```
@@ -60,18 +61,9 @@ flask db upgrade
 
 
 ## Run app with Docker
-1. Build a image
+``` bash
+docker compose up --build
+```
 
-```docker  build  -t  <image_name>:<tag>  . ```
-
-2. Build compose file
-
-``` docker compose build```
-
-3. Run compose file
-
-``` docker compose up ```
-
-4. See output 
-
-``` in browser https://localhost:5001 ```
+See output 
+https://localhost:5001
