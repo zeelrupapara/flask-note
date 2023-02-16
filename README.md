@@ -58,3 +58,21 @@ flask db migrate -m "init migration"
 flask db upgrade
 ```
 ========================================================
+
+
+## Run app with Docker
+1. Build a image
+
+```docker  build  -t  <image_name>:<tag>  . ```
+
+2. Build compose file
+
+``` docker compose build```
+
+3. Run compose file
+
+``` docker compose up ```
+
+4. See output 
+
+``` in browser https://localhost:5001 ```
