@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mariatrial-pod
+spec:
+  containers:
+  - name: mariatrial
+    image: mariadb
+    ports:
+    - containerPort: 3306
+    env:
+      - name: MARIADB_ROOT_PASSWORD
+        value: toor
+      - name: MARIADB_DATABASE
+        value: mydb
+      - name: MARIADB_USER
+        value: toor
+      - name: MARIADB_PASSWORD
+        value: toor

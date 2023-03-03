@@ -1,0 +1,54 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-depl
+  labels:
+    app: mydb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maria
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: maria
+    spec:
+       containers:
+          - name: mariadb-container
+            image: mariadb
+            ports:
+               - containerPort: 3306
+            env:
+               - name: MARIADB_ROOT_PASSWORD
+                 value: toor
+               - name: MARIADB_DATABASE
+                 value: mydb
+               - name: MARIADB_USER
+                 value: toor
+               - name: MARIADB_PASSWORD
+                 value: toor
+            volumeMounts:
+               - mountPath: /data/db
+                 name: maria-volume
+       volumes:
+          - name: maria-volume
+            hostPath:
+               path: /data
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: maria-service
+spec:
+  selector:
+    app: maria
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
