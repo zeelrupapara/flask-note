@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  labels:
+    app: flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      initContainers:
+      - command: ["flask", "db", "upgrade"]
+        image: ankitjilka31/flask-note:1.2.2
+        name: flask-migrate
+        env:
+            - name: DB_HOST
+              value: maria-service
+
+            - name: DB_NAME
+              value: mydb
+
+            - name: DB_USERNAME
+              value: toor
+
+            - name: DB_PASSWORD
+              value: toor
+
+            - name: DB_PORT
+              value: '3306'
+
+            - name: PORT
+              value: '5000'
+
+      containers:
+      - name: flask-container
+        image: ankitjilka31/flask-note:1.2.2
+        ports:
+          - containerPort: 5000
+        env:
+            - name: DB_HOST
+              value: maria-service
+
+            - name: DB_NAME
+              value: mydb
+
+            - name: DB_USERNAME
+              value: toor
+
+            - name: DB_PASSWORD
+              value: toor
+
+            - name: DB_PORT
+              value: '3306'
+
+            - name: PORT
+              value: '5000'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-service
+spec:
+  selector:
+    app: flask
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 5000
+      nodePort: 32222
