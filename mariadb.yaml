@@ -10,8 +10,6 @@ spec:
   selector:
     matchLabels:
       app: maria
-  strategy:
-    type: Recreate
   template:
     metadata:
       labels:
@@ -22,15 +20,46 @@ spec:
             image: mariadb
             ports:
                - containerPort: 3306
-            env:
-               - name: MARIADB_ROOT_PASSWORD
-                 value: toor
-               - name: MARIADB_DATABASE
-                 value: mydb
-               - name: MARIADB_USER
-                 value: toor
-               - name: MARIADB_PASSWORD
-                 value: toor
+            envFrom:
+              - configMapRef:
+                  name: db-config
+              - secretRef:
+                  name: maria-secret
+
+            # env:
+            #    - name: MARIADB_ROOT_PASSWORD
+            #      valueFrom:
+            #         secretKeyRef:
+            #             name: maria-secret
+            #             key: maria-root-password
+            #    - name: MARIADB_DATABASE
+            #      valueFrom :
+            #         configMapKeyRef :
+            #             name : db-config
+            #             key :  dbName
+            #    - name: MARIADB_USER
+            #      valueFrom:
+            #         secretKeyRef:
+            #             name: maria-secret
+            #             key: maria-username
+            #    - name: MARIADB_PASSWORD
+            #      valueFrom:
+            #         secretKeyRef:
+            #             name: maria-secret
+            #             key: maria-password
+
+
+
+              #  - name: MARIADB_ROOT_PASSWORD
+              #    value: hello
+              #  - name: MARIADB_DATABASE
+              #    value: mydb
+              #  - name: MARIADB_USER
+              #    value: hello
+              #  - name: MARIADB_PASSWORD
+              #    value: hello
+
+
             volumeMounts:
                - mountPath: /data/db
                  name: maria-volume
