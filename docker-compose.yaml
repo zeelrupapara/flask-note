@@ -15,8 +15,6 @@ services:
     restart: on-failure
     volumes:
       - mariadb-notes:/var/lib/mysql
-    # command: flask run
-
 
    app:
      image: python_app
@@ -31,9 +29,7 @@ services:
        - 5001:5000
      depends_on:
        - db
-
-
-
+       
 volumes:
   mariadb-notes:
     driver: local
