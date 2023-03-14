@@ -1,6 +1,6 @@
 
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mariadb-depl
   labels:
@@ -15,6 +15,8 @@ spec:
       labels:
         app: maria
     spec:
+          #  nodeSelector:
+          #     name: ankit
        containers:
           - name: mariadb-container
             image: mariadb
@@ -25,48 +27,18 @@ spec:
                   name: db-config
               - secretRef:
                   name: maria-secret
-
-            # env:
-            #    - name: MARIADB_ROOT_PASSWORD
-            #      valueFrom:
-            #         secretKeyRef:
-            #             name: maria-secret
-            #             key: maria-root-password
-            #    - name: MARIADB_DATABASE
-            #      valueFrom :
-            #         configMapKeyRef :
-            #             name : db-config
-            #             key :  dbName
-            #    - name: MARIADB_USER
-            #      valueFrom:
-            #         secretKeyRef:
-            #             name: maria-secret
-            #             key: maria-username
-            #    - name: MARIADB_PASSWORD
-            #      valueFrom:
-            #         secretKeyRef:
-            #             name: maria-secret
-            #             key: maria-password
-
-
-
-              #  - name: MARIADB_ROOT_PASSWORD
-              #    value: hello
-              #  - name: MARIADB_DATABASE
-              #    value: mydb
-              #  - name: MARIADB_USER
-              #    value: hello
-              #  - name: MARIADB_PASSWORD
-              #    value: hello
-
-
             volumeMounts:
-               - mountPath: /data/db
-                 name: maria-volume
-       volumes:
-          - name: maria-volume
-            hostPath:
-               path: /data
+            - mountPath: /var/lib/mysql
+              name: maria-volume
+  volumeClaimTemplates:
+  - metadata:
+        name: maria-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "local-path"
+      resources:
+        requests:
+          storage: 1Gi
 
 ---
 

@@ -14,6 +14,7 @@ spec:
       labels:
         app: flask
     spec:
+      # nodeName: luna.pride.improwised.dev
       # initContainers:
       # - command: ["flask", "db", "upgrade"]
       #   image: ankitjilka31/flask-note:1.2.2
@@ -141,6 +142,7 @@ spec:
   ttlSecondsAfterFinished: 0
   template:
     spec:
+      nodeName: luna.pride.improwised.dev
       containers:
       - name: flask-container
         image: ankitjilka31/flask-note:1.3
