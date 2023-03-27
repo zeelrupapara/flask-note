@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  # namespace: ankit
+  labels:
+    app: flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      # nodeName: luna.pride.improwised.dev
+      # initContainers:
+      # - command: ["flask", "db", "upgrade"]
+      #   image: ankitjilka31/flask-note:1.2.2
+      #   name: flask-migrate
+      #   envFrom:
+      #     - configMapRef:
+      #         name: db-config
+      #     - secretRef:
+      #         name: maria-secret
+      #   # env:
+      #   #     - name: DB_HOST
+      #   #       value: maria-service
+
+      #   #     - name: DB_NAME
+      #   #       value: mydb
+
+      #   #     - name: DB_USERNAME
+      #   #       value: hello
+
+      #   #     - name: DB_PASSWORD
+      #   #       value: hello
+
+      #   #     - name: DB_PORT
+      #   #       value: '3306'
+
+      #   #     - name: PORT
+      #   #       value: '5000'
+
+      containers:
+      - name: flask-container
+        image: ankitjilka31/flask-note:1.2.2
+        ports:
+          - containerPort: 5000
+        envFrom:
+          - configMapRef:
+              name: db-config
+          - secretRef:
+              name: maria-secret
+
+        # env:
+          # - name: DB_USERNAME
+          #   valueFrom:
+          #       secretKeyRef:
+          #           name: maria-secret
+          #           key: MARIADB_USER
+          # - name: DB_PASSWORD
+          #   valueFrom:
+          #       secretKeyRef:
+          #           name: maria-secret
+          #           key: MARIADB_PASSWORD
+        #     - name: DB_HOST
+        #       valueFrom :
+        #           configMapKeyRef :
+        #               name : db-config
+        #               key :  host
+        #     - name: DB_NAME
+        #       valueFrom :
+        #           configMapKeyRef :
+        #               name : db-config
+        #               key :  dbName
+        #     - name: DB_USERNAME
+        #       valueFrom:
+        #           secretKeyRef:
+        #               name: maria-secret
+        #               key: maria-username
+        #     - name: DB_PASSWORD
+        #       valueFrom:
+        #           secretKeyRef:
+        #               name: maria-secret
+        #               key: maria-password
+        #     - name: DB_PORT
+        #       valueFrom :
+        #           configMapKeyRef :
+        #               name : db-config
+        #               key :  dbPort
+        #     - name: PORT
+        #       valueFrom :
+        #           configMapKeyRef :
+        #               name : db-config
+        #               key :  port
+
+            # - name: DB_HOST
+            #   value: maria-service
+
+            # - name: DB_NAME
+            #   value: mydb
+
+            # - name: DB_USERNAME
+            #   value: hello
+
+            # - name: DB_PASSWORD
+            #   value: hello
+
+            # - name: DB_PORT
+            #   value: '3306'
+
+            # - name: PORT
+            #   value: '5000'
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-service
+  # namespace: ankit
+  labels:
+    app: flasksvc
+  annotations:
+    velero.io/retain-clusterip: "true"
+
+spec:
+  selector:
+    app: flask
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 5000
+
+
+
+
+
+
+
+
