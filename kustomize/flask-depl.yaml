@@ -46,7 +46,7 @@ spec:
 
       containers:
       - name: flask-container
-        image: ankitjilka31/flask-note:1.2.2
+        image: ankitjilka31/flask-note:1.3
         ports:
           - containerPort: 5000
         envFrom:
