@@ -14,5 +14,5 @@ module "base" {
   block_device_volume_size         = 100
   block_device_iops                = 400
 
-  hello_world_function_memory_size = 512
+  hello_world_function_memory_size = 712
 }
