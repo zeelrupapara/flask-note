@@ -1,0 +1,55 @@
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mariadb-depl
+  labels:
+    app: mydb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maria
+  template:
+    metadata:
+      labels:
+        app: maria
+    spec:
+          #  nodeSelector:
+          #     name: ankit
+       containers:
+          - name: mariadb-container
+            image: mariadb
+            ports:
+               - containerPort: 3306
+            envFrom:
+              - configMapRef:
+                  name: db-config
+              - secretRef:
+                  name: maria-secret
+            volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: maria-volume
+  volumeClaimTemplates:
+  - metadata:
+        name: maria-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "local-path"
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: maria-service
+spec:
+  selector:
+    app: maria
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
