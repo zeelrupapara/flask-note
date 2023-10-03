@@ -34,7 +34,7 @@ export FLASK_ENV=development
 ```
 
 #### Now, Run flask app,
-`Recommend: Before run application apply migration`
+`Recommend: Before migration run flask server`
 ```bash
 flask run
 ```
