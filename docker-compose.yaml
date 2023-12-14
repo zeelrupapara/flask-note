@@ -11,24 +11,24 @@ services:
     logging:
       driver: syslog
     ports:
-      - 3305:3306
+      - 3306:3306
     restart: on-failure
     volumes:
       - mariadb-notes:/var/lib/mysql
 
-   app:
-     image: python_app
-     build: .
-     environment:
-        DB_HOST: db
-        DB_PORT: '3306'
-        DB_NAME: note
-        DB_USERNAME: note
-        DB_PASSWORD: note
-     ports:
-       - 5001:5000
-     depends_on:
-       - db
+  #  app:
+  #    image: python_app
+  #    build: .
+  #    environment:
+  #       DB_HOST: db
+  #       DB_PORT: '3306'
+  #       DB_NAME: note
+  #       DB_USERNAME: note
+  #       DB_PASSWORD: note
+  #    ports:
+  #      - 5001:5000
+  #    depends_on:
+  #      - db
        
 volumes:
   mariadb-notes:

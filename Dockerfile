@@ -1,6 +1,7 @@
 FROM python:3.7.5
 
 WORKDIR /app
+COPY .env.example .env
 COPY . .
 RUN pip install flask
 RUN python -m pip install -r requirements.txt
