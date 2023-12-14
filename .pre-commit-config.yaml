@@ -11,9 +11,9 @@ repos:
         files: ".*py"
         exclude: ".*json$|.*txt$|.*csv|.*md"
       - id: check-yaml
-      # - id: no-commit-to-branch
-      #   args: ['--branch', 'main']
-      #   exclude: ^pull/
+      - id: no-commit-to-branch
+        args: ['--branch', 'main']
+        exclude: ^pull/
       - id: check-merge-conflict
       - id: check-ast
 
