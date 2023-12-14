@@ -6,7 +6,7 @@ on:
 jobs:
   linters:
     name: linters
-    runs-on: self-hosted
+    runs-on: ubuntu
     steps:
       - name: Checkout
         uses: actions/checkout@v4
